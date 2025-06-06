@@ -202,6 +202,15 @@ function showNextQuestion() {
             downloadResponses();
         });
         messageContainer.appendChild(downloadBtn);
+        
+        // Add Microsoft Form submit button
+        const msFormBtn = document.createElement('button');
+        msFormBtn.textContent = 'Submit to Microsoft Form';
+        msFormBtn.className = 'bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 mt-4 mx-auto block';
+        msFormBtn.addEventListener('click', () => {
+            submitToMicrosoftForm();
+        });
+        messageContainer.appendChild(msFormBtn);
     }
 }
 
@@ -439,4 +448,52 @@ function downloadResponses() {
     document.body.appendChild(downloadAnchorNode);
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
+}
+
+// --- Microsoft Forms Integration ---
+// Map chatbot responses to Microsoft Form fields
+function submitToMicrosoftForm() {
+    // Replace with your Form's field IDs (input names)
+    const formUrl = 'https://forms.office.com/pages/responsepage.aspx?id=BVQxqp-0bEq1TH-ksg24C2nHUlzSC0VFrB0DI0xiu95UMVFBNE85V1RNUzJZWk1CNDg0VDM1UlRaUi4u';
+    // Microsoft Forms expects POST to a specific endpoint with field names like 'entry.1234567890'
+    // Unfortunately, Microsoft Forms does not officially support direct POST from JS due to CORS.
+    // The best workaround is to open the Form prefilled with answers using query params.
+
+    // Map your chatbot questions to Form field IDs (replace with your actual Form field IDs)
+    const fieldMap = {
+        organisation: '1',
+        priorities: '2',
+        goals: '3',
+        consequences: '4',
+        current_support: '5',
+        upcoming_projects: '6',
+        current_products: '7',
+        adoption_rate: '8',
+        underutilised: '9',
+        training: '10',
+        technical_issues: '11',
+        integrations: '12',
+        security_confidence: '13',
+        security_tools: '14',
+        audits: '15',
+        license_value: '16',
+        license_review: '17',
+        optimization_interest: '18',
+        ai_exploration: '19',
+        innovation_interest: '20',
+        future_tech: '21',
+        better_support: '22',
+        gaps: '23',
+        roadmap_session: '24'
+    };
+
+    // Build prefill query string (replace with actual field names from your Form)
+    const params = new URLSearchParams();
+    Object.keys(fieldMap).forEach(key => {
+        if (userResponses[key]) {
+            params.append(`field${fieldMap[key]}`, userResponses[key]);
+        }
+    });
+    // Open the Form with prefilled answers in a new tab
+    window.open(`${formUrl}&${params.toString()}`, '_blank');
 }
