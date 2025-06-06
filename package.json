@@ -1,0 +1,19 @@
+{
+  "name": "microsoft-solutions-review-chatbot",
+  "version": "1.0.0",
+  "description": "A professional chatbot for Microsoft solutions and business strategy reviews",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx http-server -o",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "chatbot",
+    "microsoft",
+    "business",
+    "strategy",
+    "review"
+  ],
+  "author": "",
+  "license": "ISC"
+}
